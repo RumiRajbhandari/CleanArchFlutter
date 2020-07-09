@@ -7,11 +7,20 @@ import 'package:flutter/foundation.dart';
 class LoginViewModel extends ChangeNotifier{
   final LoginRepository _loginRepository = serviceLocator<LoginRepository>();
   UserResponse userResponse;
+  bool _isLoading = false;
 
-  void login(User user) async{
-    userResponse = await _loginRepository.login(user);
-    print('user response in vm is ${userResponse.first_name}');
+  bool get isLoading => _isLoading;
+
+  set isLoading(bool status){
+    _isLoading = status;
     notifyListeners();
+  }
+
+  Future<bool> login(User user) async{
+    isLoading = true;
+    userResponse = await _loginRepository.login(user);
+    isLoading = false;
+    return true;
   }
 
 }

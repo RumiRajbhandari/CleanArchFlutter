@@ -1,10 +1,11 @@
-import 'package:clean_arch_flutter_demo/business_logic/models/user.dart';
-import 'package:clean_arch_flutter_demo/business_logic/view_models/login_viewmodel.dart';
+import 'package:clean_arch_flutter_demo/di/service_locator.dart';
+import 'package:clean_arch_flutter_demo/feature/login/data/model/user.dart';
+import 'package:clean_arch_flutter_demo/feature/login/view_model/login_viewmodel.dart';
+import 'package:clean_arch_flutter_demo/feature/widgets/rounded_button.dart';
 import 'package:clean_arch_flutter_demo/res/colors.dart';
-import 'package:clean_arch_flutter_demo/services/service_locator.dart';
-import 'package:clean_arch_flutter_demo/ui/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 import 'login_text_field.dart';
 
@@ -22,44 +23,49 @@ class _LoginScreenState extends State<LoginScreen> {
       statusBarColor: Colors.white,
       statusBarBrightness: Brightness.dark,
     ));
-    return Scaffold(
-      backgroundColor: white_fffff,
-      body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            SizedBox(
-              height: 40,
+    return ChangeNotifierProvider<LoginViewModel>(
+      create: (BuildContext context) => viewModel,
+      child: Consumer(
+        child: Scaffold(
+          backgroundColor: white_fffff,
+          body: SafeArea(
+              child: Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                SizedBox(
+                  height: 40,
+                ),
+                Text(
+                  'Sign in',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 28,
+                      fontFamily: 'Rubik',
+                      fontWeight: FontWeight.w300,
+                      color: text_color_primary_dark),
+                ),
+                SizedBox(
+                  height: 6,
+                ),
+                Text(
+                  'Please enter your credential to proceed.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: 'Rubik',
+                      color: text_color_secondary),
+                ),
+                SizedBox(
+                  height: 64,
+                ),
+                _buildLoginForm(viewModel)
+              ],
             ),
-            Text(
-              'Sign in',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 28,
-                  fontFamily: 'Rubik',
-                  fontWeight: FontWeight.w300,
-                  color: text_color_primary_dark),
-            ),
-            SizedBox(
-              height: 6,
-            ),
-            Text(
-              'Please enter your credential to proceed.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 15,
-                  fontFamily: 'Rubik',
-                  color: text_color_secondary),
-            ),
-            SizedBox(
-              height: 64,
-            ),
-            _buildLoginForm(viewModel)
-          ],
+          )),
         ),
-      )),
+      ),
     );
   }
 

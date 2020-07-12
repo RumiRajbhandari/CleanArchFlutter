@@ -13,18 +13,14 @@ class LoginRemoteImpl implements LoginRemote {
 
   @override
   Future<UserResponse> login(User user) async {
-    print('login remote impl');
+
+    print('login remote impl ${user.username}');
+    print('login remote impl ${user.password}');
     final uri = Uri.https(_host, _path);
     final results = await http.post(uri);
     final jsonObject = json.decode(results.body);
     print('res is $jsonObject');
-//     UserBaseResponse.fromJson(json.decode(jsonObject));
   return mapToUserResponse(jsonObject);
-    /*return UserResponse(
-        first_name: user.username,
-        last_name: 'rai',
-        email: 'abc@gmail.com',
-        mobile_number: '123456');*/
   }
 
   UserResponse mapToUserResponse(Map jsonObject) {

@@ -10,13 +10,12 @@ class LoginTextField extends StatelessWidget {
 
   LoginTextField({this.hintText, this.validator, this.onSaved, this.isPassword, this.isUserName});
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
         child: TextFormField(
           obscureText: isPassword? true:false,
-          validator:  validator,
+          validator:  (input) => validator(input),
           onSaved: onSaved,
           keyboardType: isUserName? TextInputType.number : TextInputType.text,
           decoration: InputDecoration(
@@ -36,7 +35,6 @@ class LoginTextField extends StatelessWidget {
             ),
           ),
         ),
-
     );
   }
 }

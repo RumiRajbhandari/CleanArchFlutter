@@ -18,6 +18,7 @@ class LoginViewModel extends ChangeNotifier{
 
   Future<bool> login(User user) async{
     isLoading = true;
+    print('vm user is ${user.password}');
     userResponse = await _loginRepository.login(user);
     isLoading = false;
     return true;

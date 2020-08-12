@@ -2,26 +2,26 @@ import 'package:clean_arch_flutter_demo/di/service_locator.dart';
 import 'package:clean_arch_flutter_demo/feature/login/data/login_repository.dart';
 import 'package:clean_arch_flutter_demo/feature/login/data/model/user.dart';
 import 'package:clean_arch_flutter_demo/feature/login/data/model/user_base_response.dart';
+import 'package:clean_arch_flutter_demo/utils/response.dart';
 import 'package:flutter/foundation.dart';
 
-class LoginViewModel extends ChangeNotifier{
+class LoginViewModel extends ChangeNotifier {
   final LoginRepository _loginRepository = serviceLocator<LoginRepository>();
   UserResponse userResponse;
-  bool _isLoading = false;
 
-  bool get isLoading => _isLoading;
+  Response<bool> loginUseCase = Response<bool>();
 
-  set isLoading(bool status){
-    _isLoading = status;
+  void _setLoginUseCase(Response response) {
+    loginUseCase = response;
     notifyListeners();
   }
 
-  Future<bool> login(User user) async{
-    isLoading = true;
-    print('vm user is ${user.password}');
-    userResponse = await _loginRepository.login(user);
-    isLoading = false;
-    return true;
+  Future<void> login(User user) async {
+    _setLoginUseCase(Response.loading<bool>());
+    try {
+      _loginRepository.login(user).then((value) => _setLoginUseCase(Response.complete<bool>(true)));
+    } catch (exception) {
+      _setLoginUseCase(Response.error<bool>(exception.toString()));
+    }
   }
-
 }

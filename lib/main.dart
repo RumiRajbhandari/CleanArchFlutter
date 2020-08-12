@@ -3,14 +3,15 @@ import 'package:clean_arch_flutter_demo/res/colors.dart';
 import 'package:flutter/material.dart';
 
 import 'di/service_locator.dart';
+import 'feature/login/ui/login_screen.dart';
 
 void main() {
   setupServiceLocator();
   runApp(MaterialApp(
     title: "Retailer",
     routes: {
-//      '/': (context) => LoginScreen(),
-      '/': (context) => HomeScreen()
+      '/': (context) => LoginScreen(),
+      '/home': (context) => HomeScreen()
     },
     theme: ThemeData(
         primaryColor: white_fffff,

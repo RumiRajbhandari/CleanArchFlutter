@@ -1,26 +1,19 @@
-import 'dart:convert';
-
 import 'package:clean_arch_flutter_demo/feature/login/data/model/user.dart';
 import 'package:clean_arch_flutter_demo/feature/login/data/model/user_base_response.dart';
 import 'package:clean_arch_flutter_demo/feature/login/data/remote/login_remote.dart';
-import 'package:http/http.dart' as http;
 
 class LoginRemoteImpl implements LoginRemote {
   final _host = 'dbf82395-e1b7-48b8-9189-b6e1dd0eb187.mock.pstmn.io';
   final _path = 'user/authenticate';
 
-//  final Map<String, String> _headers = {'Accept': 'application/json'};
-
   @override
   Future<UserResponse> login(User user) async {
-
-    print('login remote impl ${user.username}');
-    print('login remote impl ${user.password}');
-    final uri = Uri.https(_host, _path);
-    final results = await http.post(uri);
-    final jsonObject = json.decode(results.body);
-    print('res is $jsonObject');
-  return mapToUserResponse(jsonObject);
+//    final uri = Uri.https(_host, _path);
+//    final results = await http.post(uri);
+//    final jsonObject = json.decode(results.body);
+//    return mapToUserResponse(jsonObject);
+    return Future.value(
+        UserResponse(first_name: "abc", last_name: "xyz", mobile_number: 1234, email: "abc"));
   }
 
   UserResponse mapToUserResponse(Map jsonObject) {

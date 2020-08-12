@@ -1,6 +1,7 @@
 import 'package:clean_arch_flutter_demo/di/service_locator.dart';
 import 'package:clean_arch_flutter_demo/feature/login/view_model/login_viewmodel.dart';
 import 'package:clean_arch_flutter_demo/res/colors.dart';
+import 'package:clean_arch_flutter_demo/utils/response_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -29,13 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
           body: SafeArea(
               child: Column(
             children: <Widget>[
-              viewModel.isLoading
-                  ? LinearProgressIndicator(
-                      backgroundColor: color_accent,
-                    )
-                  : SizedBox(
-                      height: 6,
-                    ),
+              observeLogin(),
               Padding(
                 padding: const EdgeInsets.fromLTRB(32.0, 26, 32, 32),
                 child: Column(
@@ -59,15 +54,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       'Please enter your credential to proceed.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontFamily: 'Rubik',
-                          color: text_color_secondary),
+                      style:
+                          TextStyle(fontSize: 15, fontFamily: 'Rubik', color: text_color_secondary),
                     ),
                     SizedBox(
                       height: 64,
                     ),
-                    LoginForm()
+                    LoginForm(viewModel)
                   ],
                 ),
               )
@@ -75,6 +68,25 @@ class _LoginScreenState extends State<LoginScreen> {
           )),
         ),
       ),
+    );
+  }
+
+  Widget observeLogin() {
+    switch (viewModel.loginUseCase.state) {
+      case ResponseState.LOADING:
+        return LinearProgressIndicator(
+          backgroundColor: color_accent,
+        );
+      case ResponseState.COMPLETE:
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.pushReplacementNamed(context, '/home');
+        });
+        break;
+      case ResponseState.ERROR:
+        break;
+    }
+    return SizedBox(
+      height: 6,
     );
   }
 }

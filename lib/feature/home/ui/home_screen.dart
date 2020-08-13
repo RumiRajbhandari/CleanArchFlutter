@@ -57,11 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _getSkuItem(SkuModel sku) {
-    return Row(
-      children: [
-        Image.network(sku.url),
-        Text(sku.name),
-      ],
+    return ListTile(
+      contentPadding: EdgeInsets.all(20),
+      leading: CircleAvatar(
+        radius: 40,
+        backgroundImage: NetworkImage(sku.url),
+      ),
+      title: Text(sku.name),
     );
   }
 }

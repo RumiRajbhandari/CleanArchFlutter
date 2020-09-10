@@ -25,8 +25,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
-        elevation: 0,
+        elevation: 1,
         backgroundColor: Theme.of(context).primaryColor,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.map),
+            onPressed: () {
+              Navigator.pushNamed(context, '/map');
+            },
+          )
+        ],
       ),
       body: ChangeNotifierProvider<HomeViewModel>(
         create: (BuildContext context) => viewModel,

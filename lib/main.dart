@@ -1,4 +1,5 @@
 import 'package:clean_arch_flutter_demo/feature/home/ui/home_screen.dart';
+import 'package:clean_arch_flutter_demo/feature/map/map_screen.dart';
 import 'package:clean_arch_flutter_demo/res/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,8 @@ void main() {
     title: "Retailer",
     routes: {
       '/': (context) => LoginScreen(),
-      '/home': (context) => HomeScreen()
+      '/home': (context) => HomeScreen(),
+      '/map': (context) => MapScreen()
     },
     theme: ThemeData(
         primaryColor: white_fffff,
